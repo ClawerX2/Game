@@ -52,7 +52,7 @@ size = Vector3(1, 1.702, 1)
 material = ExtResource("2_jv6wh")
 
 [node name="CSGPolygon3D2" type="CSGPolygon3D" parent="CSGCombiner3D" unique_id=1266854811]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7592869, 0.5000035, 3.961679)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7592869, 0.5000035, 6.70041)
 polygon = PackedVector2Array(-1.2257118, -0.008663833, -1.3636444, 1.4809346, -0.5366204, 0.99384475, 1, 0)
 depth = 3.0
 material = ExtResource("2_jv6wh")
