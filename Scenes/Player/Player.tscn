@@ -7,6 +7,11 @@ radius = 0.3
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l3ax4"]
 radius = 0.3
+height = 1.9979248
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s0eop"]
+radius = 0.3
+height = 0.9663849
 
 [node name="Player" type="CharacterBody3D" unique_id=599681530 node_paths=PackedStringArray("cam")]
 script = ExtResource("1_s0eop")
@@ -17,8 +22,17 @@ JUMP_VELOCITY = 5.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03862524, 0)
 mesh = SubResource("CapsuleMesh_s0eop")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2027191031]
+[node name="StandCollision" type="CollisionShape3D" parent="." unique_id=2027191031]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.043395996, 0)
 shape = SubResource("CapsuleShape3D_l3ax4")
 
+[node name="CrouchCollision" type="CollisionShape3D" parent="." unique_id=1945172072]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.47603607, 0)
+shape = SubResource("CapsuleShape3D_s0eop")
+
 [node name="Camera3D" type="Camera3D" parent="." unique_id=2099160501]
-transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0.5083903, 0)
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0.5, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=1654100328]
+exclude_parent = false
+target_position = Vector3(0, 1.1, 0)
