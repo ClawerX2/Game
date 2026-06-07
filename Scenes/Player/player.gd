@@ -29,7 +29,7 @@ func _calc_speed_coeff() -> float:
 	if Input.is_action_pressed("Ctrl") or ceiling_ray.is_colliding():
 		return 0.5
 	elif Input.is_action_pressed("Shift"):
-		return 1.3
+		return 1.4
 	else:
 		return 1.0
 
@@ -49,12 +49,10 @@ func _handle_ground(delta: float) -> void:
 	
 func _crouch(delta: float, is_crouch: bool) -> void:
 	if is_crouch:
-		speed_coeff = 0.5
 		stand_col.disabled  = true
 		crouch_col.disabled = false
 		cam.position = lerp(cam.position, crouch_pos, delta*TO_CROUCH_SPEED)
 	elif not ceiling_ray.is_colliding():
-		speed_coeff = 1
 		stand_col.disabled  = false
 		crouch_col.disabled = true
 		cam.position = lerp(cam.position, head_pos, delta*TO_CROUCH_SPEED)
