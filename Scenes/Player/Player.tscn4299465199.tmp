@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://n4yt5ymdvjj8"]
+
+[ext_resource type="Script" uid="uid://q4pu2comxewy" path="res://Scenes/Player/player.gd" id="1_s0eop"]
+[ext_resource type="PackedScene" uid="uid://c15d2hx8fo1u5" path="res://Scenes/InventoryManager/inventory_manager.tscn" id="2_ft8w5"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_s0eop"]
+radius = 0.3
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l3ax4"]
+radius = 0.3
+height = 1.9979248
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s0eop"]
+radius = 0.3
+height = 0.9663849
+
+[node name="Player" type="CharacterBody3D" unique_id=599681530 node_paths=PackedStringArray("cam")]
+script = ExtResource("1_s0eop")
+cam = NodePath("Camera3D")
+JUMP_VELOCITY = 5.0
+
+[node name="VisualModel" type="MeshInstance3D" parent="." unique_id=1879254490]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03862524, 0)
+mesh = SubResource("CapsuleMesh_s0eop")
+
+[node name="StandCollision" type="CollisionShape3D" parent="." unique_id=2027191031]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.043395996, 0)
+shape = SubResource("CapsuleShape3D_l3ax4")
+
+[node name="CrouchCollision" type="CollisionShape3D" parent="." unique_id=1945172072]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.47603607, 0)
+shape = SubResource("CapsuleShape3D_s0eop")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=2099160501]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0.5, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=1654100328]
+exclude_parent = false
+target_position = Vector3(0, 1, 0)
+
+[node name="InventoryManager" parent="." unique_id=1866964909 instance=ExtResource("2_ft8w5")]

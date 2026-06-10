@@ -61,11 +61,13 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	#FIXME: режим мыши выставляется каждый раз когда происходит ввод от игрока, это мешает
 	#		инвентарю правильно работать. Нужно сделать чтобы режим мыши выставлялся один раз при нажатии Esc
-	
-	#if menu:
-	#	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	#else:
-	#	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	var is_esc_pressed = event.is_action_pressed("Esc")
+	if is_esc_pressed :
+		menu = !menu
+		if menu:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		
 	var crouch_action = Input.is_action_pressed("Ctrl")
 	if(crouch_action != is_crouch): crouch_toggle()

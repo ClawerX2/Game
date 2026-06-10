@@ -26,5 +26,6 @@ func inv_toggle():
 
 func _ready() -> void:
 	is_opened = false
+	canvas.visible = false
 	for i in slots_count:
 		add_new_slot()
