@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://n4yt5ymdvjj8"]
 
-[ext_resource type="Script" uid="uid://dof8fgnxmkfxh" path="res://Scenes/Player/player.gd" id="1_s0eop"]
+[ext_resource type="Script" uid="uid://q4pu2comxewy" path="res://Scenes/Player/player.gd" id="1_s0eop"]
+[ext_resource type="PackedScene" uid="uid://c15d2hx8fo1u5" path="res://Scenes/InventoryManager/inventory_manager.tscn" id="2_ft8w5"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_s0eop"]
 radius = 0.3
@@ -18,7 +19,7 @@ script = ExtResource("1_s0eop")
 cam = NodePath("Camera3D")
 JUMP_VELOCITY = 5.0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1879254490]
+[node name="VisualModel" type="MeshInstance3D" parent="." unique_id=1879254490]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03862524, 0)
 mesh = SubResource("CapsuleMesh_s0eop")
 
@@ -35,4 +36,6 @@ transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0.5, 0)
 
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=1654100328]
 exclude_parent = false
-target_position = Vector3(0, 1.1, 0)
+target_position = Vector3(0, 1, 0)
+
+[node name="InventoryManager" parent="." unique_id=1866964909 instance=ExtResource("2_ft8w5")]

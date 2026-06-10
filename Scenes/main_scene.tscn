@@ -86,4 +86,4 @@ transform = Transform3D(1, 0, 0, 0, 0.55765814, 0.8300707, 0, -0.8300707, 0.5576
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.79348683, 1.5203481, -1.9558703)
 floor_block_on_wall = false
 floor_snap_length = 0.3
-mouse_sense = 0.005
+mouse_sense = 0.001
