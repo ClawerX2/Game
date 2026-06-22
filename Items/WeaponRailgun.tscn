@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cupe1h5a1w6xs"]
+
+[ext_resource type="PackedScene" uid="uid://bsrgah0j7xmva" path="res://Models/railgun.glb" id="1_eeuv6"]
+
+[node name="Railgun" unique_id=1796015691 instance=ExtResource("1_eeuv6")]
+
+[node name="Sketchfab_model" parent="." index="0" unique_id=1761768343]
+transform = Transform3D(-0.03, -2.6226832e-09, -1.1464113e-16, 0, -1.3113417e-09, 0.03, -2.6226832e-09, 0.03, 1.3113417e-09, 0, 0.14588857, -0.68000424)

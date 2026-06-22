@@ -3,6 +3,9 @@
 [ext_resource type="Material" uid="uid://g4slk3acnc01" path="res://Materials/PrototypeMaterial.tres" id="1_52fb6"]
 [ext_resource type="PackedScene" uid="uid://n4yt5ymdvjj8" path="res://Scenes/Player/Player.tscn" id="2_6l7je"]
 [ext_resource type="Material" uid="uid://cx2ouyynabi0q" path="res://Materials/PrototypeMaterial2.tres" id="2_jv6wh"]
+[ext_resource type="PackedScene" uid="uid://c8tljoy2s1yak" path="res://Loot/Medpack_Pickable.tscn" id="4_x6ack"]
+[ext_resource type="PackedScene" uid="uid://doewktdeq7x1q" path="res://Scenes/door_template.tscn" id="5_iacmt"]
+[ext_resource type="PackedScene" uid="uid://d32ffifonp7u3" path="res://Loot/LootRailgun.tscn" id="10_mai8y"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6l7je"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -17,6 +20,9 @@ sky = SubResource("Sky_jv6wh")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_x6ack"]
+bounce = 0.4
+
 [node name="MainScene" type="Node3D" unique_id=344422283]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=750951473]
@@ -25,6 +31,8 @@ environment = SubResource("Environment_x6ack")
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=1487901343]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.051117, 0, -2.3643188)
 use_collision = true
+collision_layer = 3
+collision_mask = 3
 
 [node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D" unique_id=2020454140]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.694542, 0, 8.820633)
@@ -49,6 +57,19 @@ material = ExtResource("1_52fb6")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.378281, 1.3870544, 3.1621325)
 material_override = ExtResource("2_jv6wh")
 size = Vector3(1, 1.702, 1)
+material = ExtResource("2_jv6wh")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1465124961]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.976788, 1.5421727, 8.84933)
+material_override = ExtResource("2_jv6wh")
+operation = 2
+size = Vector3(1.2, 2, 0.519)
+material = ExtResource("1_52fb6")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="CSGCombiner3D" unique_id=553276162]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.378281, 0.8719548, 0.1621325)
+material_override = ExtResource("2_jv6wh")
+size = Vector3(1, 0.6718008, 1)
 material = ExtResource("2_jv6wh")
 
 [node name="CSGPolygon3D2" type="CSGPolygon3D" parent="CSGCombiner3D" unique_id=1266854811]
@@ -83,7 +104,31 @@ material = ExtResource("2_jv6wh")
 transform = Transform3D(1, 0, 0, 0, 0.55765814, 0.8300707, 0, -0.8300707, 0.55765814, 0, 6.8075733, 0)
 
 [node name="Player" parent="." unique_id=599681530 instance=ExtResource("2_6l7je")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.79348683, 1.5203481, -1.9558703)
+transform = Transform3D(-0.8660254, 0, 0.50000006, 0, 1, 0, -0.50000006, 0, -0.8660254, -0.79348683, 1.5203481, -1.9558703)
+floor_stop_on_slope = false
 floor_block_on_wall = false
 floor_snap_length = 0.3
 mouse_sense = 0.001
+
+[node name="Medpack_Pickable" parent="." unique_id=974996925 instance=ExtResource("4_x6ack")]
+transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, -3.3900394, 1.0348527, 4.915803)
+physics_material_override = SubResource("PhysicsMaterial_x6ack")
+angular_velocity = Vector3(0, 0.017453292, 0)
+
+[node name="DoorTemplate" parent="." unique_id=767245121 instance=ExtResource("5_iacmt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.013041, 1.542172, 6.3962097)
+
+[node name="LootRailgun" parent="." unique_id=1698642181 instance=ExtResource("10_mai8y")]
+transform = Transform3D(0.9659258, 1.489429e-09, -0.25881907, 0.25881907, -1.13133405e-08, 0.9659258, -1.489429e-09, -1, -1.13133405e-08, -8.743094, 1.3436942, -2.275929)
+
+[node name="LootRailgun2" parent="." unique_id=1548234570 instance=ExtResource("10_mai8y")]
+transform = Transform3D(0.9659258, 1.489429e-09, -0.25881907, 0.25881907, -1.13133405e-08, 0.9659258, -1.489429e-09, -1, -1.13133405e-08, -8.743094, 1.3436942, -2.951316)
+
+[node name="LootRailgun3" parent="." unique_id=1464425539 instance=ExtResource("10_mai8y")]
+transform = Transform3D(0.9659258, 1.489429e-09, -0.25881907, 0.25881907, -1.13133405e-08, 0.9659258, -1.489429e-09, -1, -1.13133405e-08, -8.743094, 1.3436942, -3.5553122)
+
+[node name="LootRailgun4" parent="." unique_id=878500099 instance=ExtResource("10_mai8y")]
+transform = Transform3D(0.9659258, 1.489429e-09, -0.25881907, 0.25881907, -1.13133405e-08, 0.9659258, -1.489429e-09, -1, -1.13133405e-08, -8.743094, 1.3436942, -4.0781493)
+
+[node name="LootRailgun5" parent="." unique_id=168201780 instance=ExtResource("10_mai8y")]
+transform = Transform3D(0.9659258, 1.489429e-09, -0.25881907, 0.25881907, -1.13133405e-08, 0.9659258, -1.489429e-09, -1, -1.13133405e-08, -8.743094, 1.3436942, -4.573414)

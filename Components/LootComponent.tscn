@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bikf5oy45wuhb"]
+
+[ext_resource type="Script" uid="uid://dtry4qrqtp1jf" path="res://Components/LootComponent.gd" id="1_7llav"]
+
+[node name="LootComponent" type="Node" unique_id=1683802459]
+script = ExtResource("1_7llav")

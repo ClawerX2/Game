@@ -1,14 +1,18 @@
 extends CharacterBody3D
+class_name Player
 
 @export var cam: Camera3D
 @export var SPEED: float = 5
 @export var JUMP_VELOCITY: float = 4.5
 @export var mouse_sense: float = 10.0
 
+@export var inventory: InventoryManager
+
 @onready var stand_col  = $StandCollision
 @onready var crouch_col = $CrouchCollision
-@onready var ceiling_ray: RayCast3D = $RayCast3D
-@onready var inventory: InventoryManager = $InventoryManager
+@onready var ceiling_ray: RayCast3D = $CrouchRaycast
+@onready var focus_ray: RayCast3D = %FocusRaycast
+@onready var focus_panel: FocusPanel = $%InteractionPanel
 
 const MIN_PITCH = -90.0
 const MAX_PITCH = 90.0
@@ -23,7 +27,8 @@ var speed_coeff = 1
 var mov_dir: Vector3 = Vector3.ZERO
 var menu: bool = false
 var is_crouch: bool = false
-
+var last_focused_obj: InteractionComponent = null
+var hand_init_pos: Vector2
 
 func _calc_speed_coeff() -> float:
 	if Input.is_action_pressed("Ctrl") or ceiling_ray.is_colliding():
@@ -32,7 +37,6 @@ func _calc_speed_coeff() -> float:
 		return 1.4
 	else:
 		return 1.0
-
 
 #Если находимся в прыжке
 func _handle_air(delta: float) -> void:
@@ -45,22 +49,51 @@ func _handle_air(delta: float) -> void:
 func _handle_ground(delta: float) -> void:
 	velocity = lerp(velocity, mov_dir * SPEED * speed_coeff, delta * SPEED * FRIC_WEIGHT)
 
+func _unfocus_last_obj():
+	focus_panel.visible = false
+	if last_focused_obj == null: return
+	last_focused_obj.reset_outline()
+	last_focused_obj = null
 
+func _get_obj_at_focus():
+	if not focus_ray.is_colliding(): 
+		_unfocus_last_obj()
+		return
+	
+	var col = focus_ray.get_collider() as Node3D
+	var new_focused_obj = null
+	
+	if col == null: return
+	for child in col.get_children():
+		if child is InteractionComponent:
+			new_focused_obj = child
+	if new_focused_obj == null: return
+		
+	if last_focused_obj != new_focused_obj:
+		_unfocus_last_obj()
+		last_focused_obj = new_focused_obj
+		last_focused_obj.set_outline()
+		focus_panel.setup(last_focused_obj)
+		
+	focus_panel.follow_obj_pos(cam.unproject_position(col.position))
+	
 #Обработка любых событий каждый игровой кадр (180 раз в сек. при 180 FPS)
 func _process(delta: float) -> void:
+	_get_obj_at_focus()
 	if Input.is_action_just_pressed("Inventory"):
 		inventory.inv_toggle()
-		
+	if Input.is_action_just_pressed("Interact"):
+		if last_focused_obj == null: return
+		last_focused_obj.interact(self)
+
 
 #Обработка ввода игрока (включая движение мыши)
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion and not menu:
+	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		rotate_y(-event.relative.x * mouse_sense)
 		cam.rotate_x(-event.relative.y * mouse_sense)
 		cam.rotation.x = clamp(cam.rotation.x, deg_to_rad(MIN_PITCH), deg_to_rad(MAX_PITCH))
-	
-	#FIXME: режим мыши выставляется каждый раз когда происходит ввод от игрока, это мешает
-	#		инвентарю правильно работать. Нужно сделать чтобы режим мыши выставлялся один раз при нажатии Esc
+
 	var is_esc_pressed = event.is_action_pressed("Esc")
 	if is_esc_pressed :
 		menu = !menu
@@ -68,6 +101,13 @@ func _unhandled_input(event: InputEvent) -> void:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		else:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		return
+		
+	for i in range(inventory.tb_slots_count):
+		var action_name = "hotbar_" + str(i + 1)
+		if event.is_action_pressed(action_name):
+			inventory.select_from_toolbar(i)
+			return # Выходим из функции, так как кнопка уже обработана
 		
 	var crouch_action = Input.is_action_pressed("Ctrl")
 	if(crouch_action != is_crouch): crouch_toggle()
@@ -101,4 +141,4 @@ func crouch_toggle():
 	stand_col.disabled = is_crouch
 
 func _ready() -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED	
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
